@@ -5,14 +5,14 @@ Version: 0.0.0.9000
 Author: David Skalinder
 Maintainer: David Skalinder <skalinder@wisc.edu>
 Description: Clean lots of survey variables using a CSV file to define cleaning 
-    rules
-License: AGPL-3.0-or-later
+    rules.
+License: AGPL-3
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/davidskalinder/cleanmachine
 BugReports: https://github.com/davidskalinder/cleanmachine/issues
-Import:
-    dplyr (>=0.8.3),
-    magrittr (>=1.5),
-    purrr (>=0.3.2),
-    rlang (>=0.4.0)
+Imports:
+    dplyr (>= 0.8.3),
+    purrr (>= 0.3.2),
+    rlang (>= 0.4.0),
+    stringr (>= 1.4.0)
