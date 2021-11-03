@@ -6,7 +6,7 @@ Author: David Skalinder
 Maintainer: David Skalinder <skalinder@wisc.edu>
 Description: Clean lots of survey variables using a CSV file to define cleaning 
     rules.
-License: AGPL-3
+License: AGPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/davidskalinder/cleanmachine
