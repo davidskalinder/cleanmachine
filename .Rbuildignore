@@ -3,3 +3,4 @@
 ^cleanmachine\.Rproj$
 ^LICENSE\.md$
 ^README\.Rmd$
+^data-raw$
