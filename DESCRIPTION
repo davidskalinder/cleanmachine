@@ -1,28 +1,28 @@
-Package: cleanmachine
 Type: Package
+Package: cleanmachine
 Title: Clean Variables Using Rules from a Data File
 Version: 0.0.0.9000
 Author: David Skalinder
 Maintainer: David Skalinder <skalinder@wisc.edu>
-Description: Clean lots of survey variables using a CSV file to define cleaning 
-    rules.
+Description: Clean lots of survey variables using a CSV file to define
+    cleaning rules.
 License: AGPL (>= 3)
-Encoding: UTF-8
-LazyData: true
 URL: https://github.com/davidskalinder/cleanmachine
 BugReports: https://github.com/davidskalinder/cleanmachine/issues
+Depends: 
+    R (>= 2.10)
 Imports:
-    magrittr,
     dplyr,
+    magrittr,
     purrr,
     readr,
     rlang,
     stringr
-RoxygenNote: 7.1.2
-Depends: 
-    R (>= 2.10)
 Suggests: 
-    usethis,
+    haven,
     testthat (>= 3.0.0),
-    haven
+    usethis
 Config/testthat/edition: 3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.2
