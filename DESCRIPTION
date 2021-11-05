@@ -12,14 +12,17 @@ LazyData: true
 URL: https://github.com/davidskalinder/cleanmachine
 BugReports: https://github.com/davidskalinder/cleanmachine/issues
 Imports:
-    dplyr (>= 0.8.3),
     magrittr,
-    purrr (>= 0.3.2),
-    rlang (>= 0.4.0),
-    stringr (>= 1.4.0)
+    dplyr,
+    purrr,
+    readr,
+    rlang,
+    stringr
 RoxygenNote: 7.1.2
 Depends: 
     R (>= 2.10)
 Suggests: 
-    testthat (>= 3.0.0)
+    usethis,
+    testthat (>= 3.0.0),
+    haven
 Config/testthat/edition: 3
