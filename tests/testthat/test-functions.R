@@ -20,3 +20,9 @@ test_that("skeleton is good", {
     gss_demo %>% names()
   )
 })
+
+test_that("skeleton production hasn't changed", {
+  expect_snapshot_skeleton("gssdemo_metadata_skeleton.csv")
+})
+
+unlink(tmp)
