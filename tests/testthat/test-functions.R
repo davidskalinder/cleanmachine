@@ -22,7 +22,7 @@ test_that("skeleton is good", {
 })
 
 test_that("skeleton production hasn't changed", {
-  expect_snapshot_skeleton("gssdemo_metadata_skeleton.csv")
+  expect_snapshot_skeleton("gss_demo_metadata_skeleton.csv")
 })
 
 unlink(tmp)
