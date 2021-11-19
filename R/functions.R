@@ -8,7 +8,7 @@
 #'   name of the variable.
 #' @param num_exprs Number of new/old expression cols to include in file.
 #'
-#' @return Nothing, called only for side effects.
+#' @return The path of the written file.
 #' @export
 #'
 #' @examples
@@ -26,7 +26,7 @@ write_metadata_skeleton <-
     num_exprs = 5
   ) {
     if (file.exists(outfile)) {
-      return(invisible(source_vars))
+      return(outfile)
     }
     source_vars %>%
       dplyr::rename(source_varname = {{ source_varname_col }}) %>%
@@ -45,6 +45,6 @@ write_metadata_skeleton <-
                     newexpr5 = "",
       ) %>%
       readr::write_csv(outfile)
-    invisible(source_vars)
+    outfile
   }
 
