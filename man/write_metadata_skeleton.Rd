@@ -22,7 +22,7 @@ name of the variable.}
 \item{num_exprs}{Number of new/old expression cols to include in file.}
 }
 \value{
-Nothing, called only for side effects.
+The path of the written file.
 }
 \description{
 Write a skeleton metadata file
