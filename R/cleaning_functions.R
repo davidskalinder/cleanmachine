@@ -30,6 +30,17 @@ clean_column <- function(dataset, name, type_fn_working,
                                                        TRUE ~ !!name))
 }
 
+#' Apply cleaning rules
+#'
+#' Note that \code{cleaning_data_type} is applied to each column before *and*
+#' after cleaning.  Then \code{final_data_type} is applied just before output.
+#' This behavior should be restructured in future versions.
+#'
+#' @param dataset A dataset
+#' @param varinfo Variable info for the dataset
+#'
+#' @return The cleaned dataset.
+#' @export
 apply_cleaning_rules <- function(dataset, varinfo) {
   # Clean up varinfo data ----
   varinfo <- dplyr::filter(varinfo,!is.na(name))
