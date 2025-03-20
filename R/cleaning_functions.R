@@ -30,6 +30,51 @@ clean_column <- function(dataset, name, type_fn_working,
                                                        TRUE ~ !!name))
 }
 
+rename_sources <- function(dataset, varinfo) {
+  # Rename and trim
+  purrr::pmap(
+    .l = varinfo,
+    .f = function(source, name, ...) dplyr::select(dataset, !!name := !!source)
+  ) |>
+    purrr::list_cbind()
+}
+
+convert_to_working_type <- function(dataset, varinfo) {
+  # Convert columns to correct types for cleaning
+  purrr::pmap(
+    .l = varinfo,
+    .f = function(name, type_fn_working, ...) {
+      dataset |>
+        dplyr::mutate(
+          !!name := rlang::exec(type_fn_working, !!rlang::sym(name)),
+          .keep = "none"
+        )
+    }
+  ) |>
+    purrr::list_cbind()
+}
+
+clean_columns <- function(dataset, varinfo) {
+  # Clean using specified operation and old and new values
+  purrr::pmap(.l = varinfo, .f = clean_column, dataset = dataset) |>
+    purrr::list_cbind()
+}
+
+convert_to_final_type <- function(dataset, varinfo) {
+  # Convert columns to correct final types
+  purrr::pmap_dfc(
+    .l = varinfo,
+    .f = function(name, type_fn_final, ...) {
+      dataset |>
+        dplyr::mutate(
+          !!name := rlang::exec(type_fn_final, !!rlang::sym(name)),
+          .keep = "none"
+        )
+    }
+  )
+
+}
+
 #' Apply cleaning rules
 #'
 #' Note that \code{cleaning_data_type} is applied to each column before *and*
@@ -50,42 +95,13 @@ apply_cleaning_rules <- function(dataset, varinfo) {
   varinfo <-
     dplyr::mutate(varinfo,
                   type_fn_working = stringr::str_c("as.", cleaning_data_type))
-  # mutate(type_fn_working = case_when(data_type == "factor" ~ "as.integer",
-  #                                    TRUE                  ~ type_fn_final))
 
-  # Rename and trim ----
   dataset <-
-    purrr::pmap_dfc(
-      .l = varinfo,
-      .f = function(source, name, ...)
-        dplyr::select(dataset, !!name := !!source)
-    )
-
-  # Convert columns to correct types for cleaning ----
-  dataset <-
-    purrr::pmap_dfc(
-      .l = varinfo,
-      .f = function(name, type_fn_working, ...)
-        dplyr::transmute(dataset, !!name := rlang::exec(
-          type_fn_working, !!rlang::sym(name)
-        ))
-    )
-
-  # Clean using specified operation and old and new values ----
-  dataset <- purrr::pmap_dfc(.l = varinfo,
-                             .f = clean_column,
-                             dataset = dataset)
-
-
-  # Convert columns to correct final types ----
-  dataset <-
-    purrr::pmap_dfc(
-      .l = varinfo,
-      .f = function(name, type_fn_final, ...)
-        dplyr::transmute(dataset, !!name := rlang::exec(
-          type_fn_final, !!rlang::sym(name)
-        ))
-    )
+    dataset |>
+    rename_sources(varinfo) |>
+    convert_to_working_type(varinfo) |>
+    clean_columns(varinfo) |>
+    convert_to_final_type(varinfo)
 
   dataset
 }
