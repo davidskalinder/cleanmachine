@@ -17,7 +17,7 @@ apply_cleaning_rules(dataset, varinfo, type_fn_prefix = "as.")
 The cleaned dataset.
 }
 \description{
-Note that \code{cleaning_data_type} is applied to each column before *and*
+Note that \code{cleaning_data_type} is applied to each column before \emph{and}
 after cleaning.  Then \code{final_data_type} is applied just before output.
 This behavior should be restructured in future versions.
 }

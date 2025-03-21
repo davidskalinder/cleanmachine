@@ -84,8 +84,8 @@ convert_to_final_type <- function(dataset, varinfo) {
 
 #' Apply cleaning rules
 #'
-#' Note that \code{cleaning_data_type} is applied to each column before *and*
-#' after cleaning.  Then \code{final_data_type} is applied just before output.
+#' Note that `cleaning_data_type` is applied to each column before *and*
+#' after cleaning.  Then `final_data_type` is applied just before output.
 #' This behavior should be restructured in future versions.
 #'
 #' @param dataset A dataset
