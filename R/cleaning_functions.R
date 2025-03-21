@@ -16,19 +16,15 @@ clean_column <- function(dataset, name, type_fn_working,
                          oldexpr5, newexpr5, ...) {
   name <- rlang::sym(name)
 
-  old1 <- parse_expr_via_str(oldexpr1)
-  old2 <- parse_expr_via_str(oldexpr2)
-  old3 <- parse_expr_via_str(oldexpr3)
-  old4 <- parse_expr_via_str(oldexpr4)
-  old5 <- parse_expr_via_str(oldexpr5)
-  new1 <- parse_to_type(newexpr1, type_fn_working)
-  new2 <- parse_to_type(newexpr2, type_fn_working)
-  new3 <- parse_to_type(newexpr3, type_fn_working)
-  new4 <- parse_to_type(newexpr4, type_fn_working)
-  new5 <- parse_to_type(newexpr5, type_fn_working)
+  old_exprs <-
+    list(oldexpr1, oldexpr2, oldexpr3, oldexpr4, oldexpr5) |>
+    purrr::map(parse_expr_via_str)
+  new_exprs <-
+    list(newexpr1, newexpr2, newexpr3, newexpr4, newexpr5) |>
+    purrr::map(\(x) parse_to_type(x, type_fn_working))
 
   fmlas <-
-    list(c(old1, old2, old3, old4, old5), c(new1, new2, new3, new4, new5)) |>
+    list(old_exprs, new_exprs) |>
     purrr::pmap(\(x, y) rlang::expr(!!x ~ !!y))
 
   dplyr::mutate(
