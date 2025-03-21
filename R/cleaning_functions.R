@@ -21,6 +21,7 @@ clean_column <- function(dataset, name, type_fn_working,
     purrr::map(parse_expr_via_str)
   new_exprs <-
     list(newexpr1, newexpr2, newexpr3, newexpr4, newexpr5) |>
+    # convert types to ensure case_when args agree
     purrr::map(\(x) parse_to_type(x, type_fn_working))
 
   fmlas <-
