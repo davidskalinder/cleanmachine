@@ -11,7 +11,7 @@ apply_cleaning_rules(dataset, varinfo, type_fn_prefix = "as.")
 
 \item{varinfo}{Variable info for the dataset}
 
-\item{type_fn_prefix}{Prefix for cleaning_data_type and final_data_type cols}
+\item{type_fn_prefix}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} Prefix for cleaning_data_type and final_data_type cols}
 }
 \value{
 The cleaned dataset.
