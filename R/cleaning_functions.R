@@ -1,3 +1,13 @@
+parse_expr_via_str <- function(metadata_expr) {
+  # allows either values or expressions in metadata spreadsheet
+  rlang::parse_expr(as.character(metadata_expr))
+}
+
+parse_to_type <- function(metadata_expr, type_fn) {
+  # evaluate these args to make an expr with their values (a str and an expr)
+  rlang::expr(rlang::exec(!!type_fn, !!parse_expr_via_str(metadata_expr)))
+}
+
 clean_column <- function(dataset, name, type_fn_working,
                          oldexpr1, newexpr1,
                          oldexpr2, newexpr2,
@@ -5,22 +15,17 @@ clean_column <- function(dataset, name, type_fn_working,
                          oldexpr4, newexpr4,
                          oldexpr5, newexpr5, ...) {
   name <- rlang::sym(name)
-  # parse_expr business allows either values or expressions in sheet
-  old1 <- rlang::expr(eval(rlang::parse_expr(as.character(oldexpr1))))
-  old2 <- rlang::expr(eval(rlang::parse_expr(as.character(oldexpr2))))
-  old3 <- rlang::expr(eval(rlang::parse_expr(as.character(oldexpr3))))
-  old4 <- rlang::expr(eval(rlang::parse_expr(as.character(oldexpr4))))
-  old5 <- rlang::expr(eval(rlang::parse_expr(as.character(oldexpr5))))
-  new1 <- rlang::expr(rlang::exec(type_fn_working,
-                                  eval(rlang::parse_expr(as.character(newexpr1)))))
-  new2 <- rlang::expr(rlang::exec(type_fn_working,
-                                  eval(rlang::parse_expr(as.character(newexpr2)))))
-  new3 <- rlang::expr(rlang::exec(type_fn_working,
-                                  eval(rlang::parse_expr(as.character(newexpr3)))))
-  new4 <- rlang::expr(rlang::exec(type_fn_working,
-                                  eval(rlang::parse_expr(as.character(newexpr4)))))
-  new5 <- rlang::expr(rlang::exec(type_fn_working,
-                                  eval(rlang::parse_expr(as.character(newexpr5)))))
+
+  old1 <- parse_expr_via_str(oldexpr1)
+  old2 <- parse_expr_via_str(oldexpr2)
+  old3 <- parse_expr_via_str(oldexpr3)
+  old4 <- parse_expr_via_str(oldexpr4)
+  old5 <- parse_expr_via_str(oldexpr5)
+  new1 <- parse_to_type(newexpr1, type_fn_working)
+  new2 <- parse_to_type(newexpr2, type_fn_working)
+  new3 <- parse_to_type(newexpr3, type_fn_working)
+  new4 <- parse_to_type(newexpr4, type_fn_working)
+  new5 <- parse_to_type(newexpr5, type_fn_working)
 
   dplyr::transmute(dataset, !!name := dplyr::case_when(!!old1 ~ !!new1,
                                                        !!old2 ~ !!new2,
