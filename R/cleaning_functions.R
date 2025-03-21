@@ -30,6 +30,14 @@ clean_column <- function(dataset, name, type_fn_working,
                                                        TRUE ~ !!name))
 }
 
+prefix_str_to_type_fns <- function(varinfo, str = "as.") {
+  varinfo |>
+    dplyr::mutate(
+      type_fn_final = stringr::str_c("as.", final_data_type),
+      type_fn_working = stringr::str_c("as.", cleaning_data_type)
+    )
+}
+
 rename_sources <- function(dataset, varinfo) {
   # Rename and trim
   purrr::pmap(
@@ -72,7 +80,6 @@ convert_to_final_type <- function(dataset, varinfo) {
         )
     }
   )
-
 }
 
 #' Apply cleaning rules
@@ -86,15 +93,12 @@ convert_to_final_type <- function(dataset, varinfo) {
 #'
 #' @return The cleaned dataset.
 #' @export
-apply_cleaning_rules <- function(dataset, varinfo) {
+apply_cleaning_rules <- function(dataset, varinfo, type_fn_prefix = "as.") {
   # Clean up varinfo data ----
-  varinfo <- dplyr::filter(varinfo,!is.na(name))
   varinfo <-
-    dplyr::mutate(varinfo,
-                  type_fn_final = stringr::str_c("as.", final_data_type))
-  varinfo <-
-    dplyr::mutate(varinfo,
-                  type_fn_working = stringr::str_c("as.", cleaning_data_type))
+    varinfo |>
+    dplyr::filter(!is.na(name)) |>
+    prefix_str_to_type_fns(type_fn_prefix)
 
   dataset <-
     dataset |>
