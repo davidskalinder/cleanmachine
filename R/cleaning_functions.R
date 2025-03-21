@@ -89,9 +89,10 @@ convert_to_final_type <- function(dataset, varinfo) {
 
 #' Apply cleaning rules
 #'
-#' Note that `cleaning_data_type` is applied to each column before *and* after
-#' cleaning.  Then `final_data_type` is applied just before output. This
-#' behavior should be restructured in future versions.
+#' Note that `cleaning_data_type` is applied to each column before cleaning and
+#' also to the results of each cleaning expression (`newexp*`).  This ensures
+#' that each cleaned column contains only one data type (as it must).  Then each
+#' column is transformed to `final_data_type` just before output.
 #'
 #' @param dataset A dataset
 #' @param varinfo Variable info for the dataset
