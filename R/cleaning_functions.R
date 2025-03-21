@@ -90,6 +90,7 @@ convert_to_final_type <- function(dataset, varinfo) {
 #'
 #' @param dataset A dataset
 #' @param varinfo Variable info for the dataset
+#' @param type_fn_prefix Prefix for cleaning_data_type and final_data_type cols
 #'
 #' @return The cleaned dataset.
 #' @export
