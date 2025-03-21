@@ -27,12 +27,18 @@ clean_column <- function(dataset, name, type_fn_working,
   new4 <- parse_to_type(newexpr4, type_fn_working)
   new5 <- parse_to_type(newexpr5, type_fn_working)
 
-  dplyr::transmute(dataset, !!name := dplyr::case_when(!!old1 ~ !!new1,
-                                                       !!old2 ~ !!new2,
-                                                       !!old3 ~ !!new3,
-                                                       !!old4 ~ !!new4,
-                                                       !!old5 ~ !!new5,
-                                                       TRUE ~ !!name))
+  dplyr::mutate(
+    dataset,
+    !!name := dplyr::case_when(
+      !!old1 ~ !!new1,
+      !!old2 ~ !!new2,
+      !!old3 ~ !!new3,
+      !!old4 ~ !!new4,
+      !!old5 ~ !!new5,
+      TRUE ~ !!name
+    ),
+    .keep = "none"
+  )
 }
 
 prefix_str_to_type_fns <- function(varinfo, str = "as.") {
