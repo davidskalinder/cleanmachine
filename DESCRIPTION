@@ -1,7 +1,7 @@
 Package: cleanmachine
 Type: Package
 Title: Clean Variables Using Rules from a Data File
-Version: 0.0.0.9002
+Version: 0.0.0.9003
 Author: David Skalinder
 Maintainer: David Skalinder <skalinder@wisc.edu>
 Description: Clean lots of survey variables using a CSV file to define cleaning 
