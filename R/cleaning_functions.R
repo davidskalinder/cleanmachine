@@ -89,13 +89,14 @@ convert_to_final_type <- function(dataset, varinfo) {
 
 #' Apply cleaning rules
 #'
-#' Note that `cleaning_data_type` is applied to each column before *and*
-#' after cleaning.  Then `final_data_type` is applied just before output.
-#' This behavior should be restructured in future versions.
+#' Note that `cleaning_data_type` is applied to each column before *and* after
+#' cleaning.  Then `final_data_type` is applied just before output. This
+#' behavior should be restructured in future versions.
 #'
 #' @param dataset A dataset
 #' @param varinfo Variable info for the dataset
-#' @param type_fn_prefix `r lifecycle::badge("experimental")` Prefix for cleaning_data_type and final_data_type cols
+#' @param type_fn_prefix `r lifecycle::badge("experimental")` Prefix for
+#'   cleaning_data_type and final_data_type cols
 #'
 #' @return The cleaned dataset.
 #' @export
