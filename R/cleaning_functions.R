@@ -27,16 +27,13 @@ clean_column <- function(dataset, name, type_fn_working,
   new4 <- parse_to_type(newexpr4, type_fn_working)
   new5 <- parse_to_type(newexpr5, type_fn_working)
 
+  fmlas <-
+    list(c(old1, old2, old3, old4, old5), c(new1, new2, new3, new4, new5)) |>
+    purrr::pmap(\(x, y) rlang::expr(!!x ~ !!y))
+
   dplyr::mutate(
     dataset,
-    !!name := dplyr::case_when(
-      !!old1 ~ !!new1,
-      !!old2 ~ !!new2,
-      !!old3 ~ !!new3,
-      !!old4 ~ !!new4,
-      !!old5 ~ !!new5,
-      TRUE ~ !!name
-    ),
+    !!name := dplyr::case_when(!!!fmlas, TRUE ~ !!name),
     .keep = "none"
   )
 }
